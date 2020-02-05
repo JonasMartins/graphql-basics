@@ -1,3 +1,3 @@
 ### GraphQL Basics
 
-![GrapgQL](https://upload.wikimedia.org/wikipedia/commons/1/17/GraphQL_Logo.svg)
+<img src="images/logo.png" width="200" height="200" align="middle" />
