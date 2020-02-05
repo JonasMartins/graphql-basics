@@ -1,4 +1,5 @@
 *.pdf
 *.log
+info.txt
 graphql-prisma/prisma/docker-compose.yml
 graphql-basics/node_modules
