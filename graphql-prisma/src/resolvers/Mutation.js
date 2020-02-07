@@ -107,22 +107,22 @@ const Mutation = {
 
 		return post;
 	},
-	deletePost(parent, args, { db, publish }, info) {
-		const postIndex = db.posts.findIndex(post => post.id === args.id);
+	// deletePost(parent, args, { db, pubsub }, info) {
+	// 	const postIndex = db.posts.findIndex(post => post.id === args.id);
 
-		if (postIndex === -1) throw new Error('Post not Found');
-		const [post] = db.posts.splice(postIndex, 1);
-		db.comments = db.comments.filter(comment => comment.post !== args.id);
+	// 	if (postIndex === -1) throw new Error('Post not Found');
+	// 	const [post] = db.posts.splice(postIndex, 1);
+	// 	db.comments = db.comments.filter(comment => comment.post !== args.id);
 
-		if (post.published) {
-			pubsub.publish('post', {
-				mutation: 'DELETED',
-				data: post
-			});
-		}
+	// 	if (post.published) {
+	// 		pubsub.publish('post', {
+	// 			mutation: 'DELETED',
+	// 			data: post
+	// 		});
+	// 	}
 
-		return post;
-	},
+	// 	return post;
+	// },
 	createComment(parent, args, { db, pubsub }, info) {
 		const userExists = db.users.some(user => user.id === args.data.author);
 		const postExists = db.posts.some(
@@ -152,21 +152,21 @@ const Mutation = {
 		pubsub;
 
 		return comment;
-	},
-	deleteComment(parent, args, { db, pubsub }, info) {
-		const commentIndex = db.comments.findIndex(
-			comment => comment.id === args.id
-		);
-		if (commentIndex === -1) throw new Error('Comment not found');
-		const [comment] = db.comments.splice(commentIndex, 1);
-		pubsub.publish(`comment ${comment.post}`, {
-			comment: {
-				mutation: 'UPDATED',
-				data: comment
-			}
-		});
-		return comment;
 	}
+	// 	deleteComment(parent, args, { db, pubsub }, info) {
+	// 		const commentIndex = db.comments.findIndex(
+	// 			comment => comment.id === args.id
+	// 		);
+	// 		if (commentIndex === -1) throw new Error('Comment not found');
+	// 		const [comment] = db.comments.splice(commentIndex, 1);
+	// 		pubsub.publish(`comment ${comment.post}`, {
+	// 			comment: {
+	// 				mutation: 'UPDATED',
+	// 				data: comment
+	// 			}
+	// 		});
+	// 		return comment;
+	// 	}
 };
 
 export { Mutation as default };
