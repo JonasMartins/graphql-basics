@@ -1,8 +1,21 @@
-import uuidv4 from 'uuid/v4';
+import bcrypt from 'bcryptjs';
 
 const Mutation = {
 	async createUser(parent, args, { prisma }, info) {
-		const user = await prisma.mutation.createUser({ data: args.data }, info);
+		// password length validation on front
+
+		const password = await bcrypt.hash(args.data.password, 10);
+
+		// password property has been overwritten
+		const user = await prisma.mutation.createUser(
+			{
+				data: {
+					...args.data,
+					password
+				}
+			},
+			info
+		);
 		return user;
 	},
 	async deleteUser(parent, args, { prisma }, info) {
