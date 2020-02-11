@@ -2,11 +2,29 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const Mutation = {
+	async login(parent, args, { prisma }, info) {
+		const user = await prisma.query.user({
+			where: {
+				email: args.data.email
+			}
+		});
+		if (!user) throw new Error('Email or password error');
+
+		const matchPassword = await bcrypt.compare(
+			args.data.password,
+			user.password
+		);
+		if (!matchPassword) throw new Error('Email or password error');
+
+		return {
+			user,
+			token: jwt.sign({ userId: user.id }, 'secret')
+		};
+	},
+
 	async createUser(parent, args, { prisma }, info) {
 		// password length validation on front
-
 		const password = await bcrypt.hash(args.data.password, 10);
-
 		// password property has been overwritten
 		const user = await prisma.mutation.createUser({
 			data: {
