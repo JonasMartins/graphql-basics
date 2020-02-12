@@ -1,7 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 const getUserId = (req, requireAuth = true) => {
-	const header = req.request.headers.authorization;
+	// http and web sockets for mutations and queries or
+	// Subscriptions resplectively
+	const header = req.request
+		? req.request.headers.authorization
+		: req.connection.context.Authorization;
 	if (header) {
 		const token = header.replace('Bearer ', '');
 		const auth = jwt.verify(token, 'secret');
