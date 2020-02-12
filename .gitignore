@@ -3,7 +3,6 @@
 info.txt
 dist/
 prisma/docker-compose.yml
-src/prisma.js
 prisma-review-website/docker-compose.yml
 node_modules
 config/
