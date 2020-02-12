@@ -1,4 +1,4 @@
-import { extratFragmentReplacements } from 'prisma-binding';
+import { extractFragmentReplacements } from 'prisma-binding';
 import Query from './Query';
 import Mutation from './Mutation';
 import Subscription from './Subscription';
@@ -16,6 +16,6 @@ const resolvers = {
 };
 // extratFragmentReplacements is a method that
 // pass through all resolvers and get any framents defined
-const fragments = extratFragmentReplacements(resolvers);
+const fragments = extractFragmentReplacements(resolvers);
 
 export { resolvers, fragments };
