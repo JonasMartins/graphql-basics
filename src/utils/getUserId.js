@@ -8,7 +8,7 @@ const getUserId = (req, requireAuth = true) => {
 		: req.connection.context.Authorization;
 	if (header) {
 		const token = header.replace('Bearer ', '');
-		const auth = jwt.verify(token, 'secret');
+		const auth = jwt.verify(token, process.env.JWT_SECRET);
 		return auth.userId;
 	}
 	if (requireAuth) throw new Error('Authentication required');
